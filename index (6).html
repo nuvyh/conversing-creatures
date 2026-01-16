@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversing Creatures - Understanding Animal Communication</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+            background: #f5f1e8;
+            color: #2d2d2d;
+            overflow-x: hidden;
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            padding: 1rem 2rem;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(76, 101, 80, 0.15);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #4c6550, #a67c52);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: #4a5568;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: all 0.3s;
+            transform: translateX(-50%);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #4c6550 0%, #a67c52 50%, #d4a574 100%);
+            position: relative;
+            overflow: hidden;
+            padding: 2rem;
+        }
+
+        .hero-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 20s infinite;
+        }
+
+        .particle:nth-child(1) { width: 80px; height: 80px; top: 10%; left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { width: 60px; height: 60px; top: 60%; left: 80%; animation-delay: 2s; }
+        .particle:nth-child(3) { width: 100px; height: 100px; top: 80%; left: 20%; animation-delay: 4s; }
+        .particle:nth-child(4) { width: 50px; height: 50px; top: 30%; left: 70%; animation-delay: 6s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-50px) rotate(180deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            max-width: 1000px;
+        }
+
+        h1 {
+            font-size: 5rem;
+            color: white;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -2px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tagline {
+            font-size: 1.8rem;
+            color: white;
+            margin-bottom: 3rem;
+            font-weight: 300;
+            animation: fadeInUp 1s ease-out 0.2s backwards;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 0.4s backwards;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #4c6550;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: #4c6550;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+        }
+
+        .scroll-indicator svg {
+            width: 30px;
+            height: 30px;
+            fill: white;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: white;
+            padding: 4rem 2rem;
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.05);
+        }
+
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 1rem;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #4c6550, #a67c52);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #3a3a3a;
+            font-size: 1rem;
+        }
+
+        /* Section Styling */
+        section {
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: 3.5rem;
+            background: linear-gradient(135deg, #4c6550, #a67c52);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 3rem;
+            text-align: center;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        h3 {
+            font-size: 2rem;
+            color: #2d2d2d;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        /* Carousel Container */
+        .carousel-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            margin: 3rem 0;
+        }
+
+        .carousel {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .carousel-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .carousel-dot.active {
+            background: linear-gradient(135deg, #4c6550, #a67c52);
+            width: 30px;
+            border-radius: 10px;
+        }
+
+        /* Product Cards with Glassmorphism */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(76, 101, 80, 0.2);
+            border-radius: 24px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 8px 32px rgba(76, 101, 80, 0.1);
+            transition: all 0.3s;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(76, 101, 80, 0.2);
+        }
+
+        /* Feature Grid with Modern Cards */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #4c6550, #a67c52);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(76, 101, 80, 0.2);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #4c6550, #a67c52);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+
+        .feature-card h4 {
+            color: #2d2d2d;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .feature-card p {
+            color: #3a3a3a;
+            line-height: 1.7;
+        }
+
+        /* Tabs Interface */
+        .tabs-container {
+            margin: 3rem 0;
+        }
+
+        .tab-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .tab-btn {
+            padding: 1rem 2rem;
+            border: 2px solid #d4c4b0;
+            background: white;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            color: #3a3a3a;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #4c6550, #a67c52);
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 5px 20px rgba(76, 101, 80, 0.3);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Team Cards */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .team-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .team-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(76, 101, 80, 0.05), rgba(166, 124, 82, 0.05));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .team-card:hover::before {
+            opacity: 1;
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.2);
+        }
+
+        .team-avatar {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            font-weight: 700;
+        }
+
+        .team-card h4 {
+            color: #2d3748;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            position: relative;
+        }
+
+        .team-card .role {
+            color: #3b82f6;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .team-card p {
+            color: #4a5568;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        /* Accordion FAQ */
+        .accordion-item {
+            background: white;
+            border-radius: 15px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+        }
+
+        .accordion-item:hover {
+            box-shadow: 0 4px 20px rgba(76, 101, 80, 0.15);
+        }
+
+        .accordion-header {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: #2d2d2d;
+            transition: all 0.3s;
+        }
+
+        .accordion-header:hover {
+            background: rgba(76, 101, 80, 0.05);
+        }
+
+        .accordion-icon {
+            transition: transform 0.3s;
+            font-size: 1.5rem;
+            color: #4c6550;
+        }
+
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0 1.5rem;
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 500px;
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #4c6550, #a67c52);
+            border-radius: 30px;
+            padding: 4rem 2rem;
+            text-align: center;
+            margin: 4rem 0;
+            box-shadow: 0 20px 60px rgba(76, 101, 80, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .cta-section h3 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .cta-section p {
+            color: white;
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        /* Contact Cards */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .contact-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(76, 101, 80, 0.2);
+        }
+
+        .contact-card h3 {
+            color: #4c6550;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-card a {
+            color: #a67c52;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .contact-card a:hover {
+            color: #4c6550;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #2d3748, #1a202c);
+            padding: 3rem 2rem;
+            text-align: center;
+            color: white;
+        }
+
+        footer p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #4c6550, #a67c52);
+            z-index: 9999;
+            transition: width 0.3s;
+        }
+
+        p {
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            color: #3a3a3a;
+        }
+
+        ul {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.8rem;
+            color: #3a3a3a;
+            line-height: 1.6;
+        }
+
+        strong {
+            color: #2d2d2d;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 3rem; }
+            h2 { font-size: 2.5rem; }
+            .tagline { font-size: 1.3rem; }
+            nav ul { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">🐾 Conversing Creatures</div>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#product">Product</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#research">Research</a></li>
+                <li><a href="#ethics">Ethics</a></li>
+                <li><a href="#team">Team</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+        <div class="hero-content">
+            <h1>Conversing Creatures</h1>
+            <p class="tagline">Ever wondered what your pet was thinking?</p>
+            <div class="cta-buttons">
+                <a href="#product" class="btn btn-primary">Discover More</a>
+                <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <div class="stats-section">
+        <div class="stats-container">
+            <div class="stat-item">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Proceeds to Animal Welfare</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">250+</div>
+                <div class="stat-label">Dolphin Whistles Analyzed</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">110M+</div>
+                <div class="stat-label">Animals in Research Annually</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">80B+</div>
+                <div class="stat-label">Land Animals in Agriculture</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Section with Carousel -->
+    <section id="product">
+        <h2>The Product</h2>
+        
+        <!-- Product Images Showcase -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)); gap: 2rem; margin: 3rem 0;">
+            <div class="glass-card" style="text-align: center;">
+                <h3 style="margin-bottom: 2rem;">Product Design</h3>
+                <img src="https://raw.githubusercontent.com/user-attachments/assets/placeholder-1" alt="Conversing Creatures Device - 3D Render" style="width: 100%; max-width: 500px; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.1);">
+                <p style="margin-top: 1.5rem; font-style: italic; color: #4a5568;">Advanced biosensing technology with real-time neural activity monitoring</p>
+            </div>
+            
+            <div class="glass-card" style="text-align: center;">
+                <h3 style="margin-bottom: 2rem;">Technical Blueprint</h3>
+                <img src="https://raw.githubusercontent.com/user-attachments/assets/placeholder-2" alt="Product Technical Specifications" style="width: 100%; max-width: 600px; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.1);">
+                <p style="margin-top: 1.5rem; font-style: italic; color: #4a5568;">Circular latch-on biosensing tag for animal communication research</p>
+            </div>
+        </div>
+
+        <div class="glass-card" style="margin: 3rem 0;">
+            <h3>Device Features</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+                <div>
+                    <h4 style="color: #4c6550; font-size: 1.1rem; margin-bottom: 0.5rem;">🎤 Bioacoustics Capture</h4>
+                    <p>Multiple mic ports capture vocalizations and environmental sounds</p>
+                </div>
+                <div>
+                    <h4 style="color: #4c6550; font-size: 1.1rem; margin-bottom: 0.5rem;">🧠 EEG/EMG Sensors</h4>
+                    <p>Species-calibrated contact pads for non-invasive neural monitoring</p>
+                </div>
+                <div>
+                    <h4 style="color: #4c6550; font-size: 1.1rem; margin-bottom: 0.5rem;">📱 Smart Connectivity</h4>
+                    <p>Bluetooth antenna for real-time smartphone translation</p>
+                </div>
+                <div>
+                    <h4 style="color: #4c6550; font-size: 1.1rem; margin-bottom: 0.5rem;">🔋 Extended Battery</h4>
+                    <p>48-hour target battery life with inductive charging</p>
+                </div>
+                <div>
+                    <h4 style="color: #4c6550; font-size: 1.1rem; margin-bottom: 0.5rem;">💧 Waterproof Design</h4>
+                    <p>Durable casing optimized for dogs and dolphins</p>
+                </div>
+                <div>
+                    <h4 style="color: #4c6550; font-size: 1.1rem; margin-bottom: 0.5rem;">🔒 Secure Storage</h4>
+                    <p>Encrypted data storage with optional private mode</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="carousel-container">
+            <div class="carousel" id="productCarousel">
+                <div class="carousel-slide">
+                    <h3>🧠 Neural Detection</h3>
+                    <p>Advanced sensors detect and record electroencephalographic signals (brain waves) from your animal in real-time. Our proprietary technology is calibrated for different species, accounting for unique skull structures and neural characteristics.</p>
+                    <p>The device is completely non-invasive, lightweight, and designed to cause zero distress to your animal.</p>
+                </div>
+                <div class="carousel-slide">
+                    <h3>📊 Behavioral Analysis</h3>
+                    <p>The device records corresponding actions, sounds, and environmental stimuli to create comprehensive behavioral profiles. This multi-modal approach ensures accurate translation by capturing the full context of animal communication.</p>
+                    <p>Every gesture, vocalization, and environmental factor is analyzed to understand the complete picture.</p>
+                </div>
+                <div class="carousel-slide">
+                    <h3>🤖 AI Translation</h3>
+                    <p>Our foundation AI model, similar to NatureLM-audio, analyzes patterns across individuals to identify recurring neural signatures linked to specific communications.</p>
+                    <p>The more animals use our device, the smarter it becomes. You're contributing to the most comprehensive animal communication database in history.</p>
+                </div>
+            </div>
+            <div class="carousel-controls">
+                <span class="carousel-dot active" onclick="goToSlide(0)"></span>
+                <span class="carousel-dot" onclick="goToSlide(1)"></span>
+                <span class="carousel-dot" onclick="goToSlide(2)"></span>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <h3>Technical Specifications</h3>
+            <p><strong>Internal Sensor System:</strong> Calibrated for different species with advanced neural pattern recognition.</p>
+            <p><strong>External Casing:</strong> Durable, lightweight, and environmentally resistant. Multiple versions for different animal sizes.</p>
+            <p><strong>Initial Focus:</strong> Optimized for dogs and dolphins, expanding to all animals.</p>
+            <p><strong>Smart Connectivity:</strong> Connect to your smartphone for real-time translations and contribute to our global database.</p>
+        </div>
+    </section>
+
+    <!-- Features Section with Tabs -->
+    <section id="features">
+        <h2>Features & Applications</h2>
+
+        <div class="tabs-container">
+            <div class="tab-buttons">
+                <button class="tab-btn active" onclick="openTab(event, 'veterinary')">Veterinary</button>
+                <button class="tab-btn" onclick="openTab(event, 'research')">Research</button>
+                <button class="tab-btn" onclick="openTab(event, 'advocacy')">Advocacy</button>
+                <button class="tab-btn" onclick="openTab(event, 'disaster')">Disaster Prevention</button>
+                <button class="tab-btn" onclick="openTab(event, 'ecosystem')">Ecosystem</button>
+                <button class="tab-btn" onclick="openTab(event, 'pet')">Pet Care</button>
+            </div>
+
+            <div id="veterinary" class="tab-content active">
+                <div class="glass-card">
+                    <h3>🏥 Veterinary Medicine</h3>
+                    <p>Transform veterinary care by allowing doctors to understand animal pain levels, discomfort, and specific health concerns that animals cannot otherwise communicate. No more guesswork—just clear, actionable insights into your animal's wellbeing.</p>
+                </div>
+            </div>
+
+            <div id="research" class="tab-content">
+                <div class="glass-card">
+                    <h3>🔬 Scientific Research</h3>
+                    <p>Revolutionize laboratory research by enabling scientists to distinguish between manageable discomfort and genuine suffering. With 110+ million animals used in research annually, this technology ensures ethical treatment based on real understanding rather than assumptions.</p>
+                </div>
+            </div>
+
+            <div id="advocacy" class="tab-content">
+                <div class="glass-card">
+                    <h3>❤️ Animal Advocacy</h3>
+                    <p>Provide scientific evidence of animal consciousness and sentience to support movements for better treatment across industries. Transform how agriculture, research, and conservation approach animal welfare through data-driven insights.</p>
+                </div>
+            </div>
+
+            <div id="disaster" class="tab-content">
+                <div class="glass-card">
+                    <h3>🌍 Disaster Prevention</h3>
+                    <p>Leverage animals' natural ability to detect disasters up to 20 hours before they occur. Research shows animals can sense earthquakes, tsunamis, and other natural disasters—our technology makes this knowledge accessible for early warning systems.</p>
+                </div>
+            </div>
+
+            <div id="ecosystem" class="tab-content">
+                <div class="glass-card">
+                    <h3>🌲 Ecosystem Management</h3>
+                    <p>Better understand animal behavior to prevent ecological disasters. The 70-year Yellowstone imbalance could have been avoided with direct animal communication. Manage wildlife populations and ecosystems with input from their actual inhabitants.</p>
+                </div>
+            </div>
+
+            <div id="pet" class="tab-content">
+                <div class="glass-card">
+                    <h3>🐕 Pet Companionship</h3>
+                    <p>Deepen the bond with your pets by truly understanding their needs, emotions, and thoughts throughout their day. Know when they're happy, anxious, or in need of attention. Transform your relationship with your furry friends.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="features-grid" style="margin-top: 4rem;">
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h4>Real-Time Translation</h4>
+                <p>Instant translation of animal communication patterns with confidence scoring and contextual analysis.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h4>Smartphone Connected</h4>
+                <p>Seamless integration with iOS and Android devices for easy access to insights and historical data.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h4>Privacy First</h4>
+                <p>Bank-level encryption with optional private mode. You control all data sharing preferences.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌐</div>
+                <h4>Global Database</h4>
+                <p>Contribute to humanity's understanding of animal communication while improving accuracy for all users.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h4>Lightweight Design</h4>
+                <p>Comfortable, non-intrusive clip-on design that won't impede your animal's natural movement.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔋</div>
+                <h4>Long Battery Life</h4>
+                <p>Extended battery life of up to 48 hours per charge with fast charging capabilities.</p>
+            </div>
+        </div>
+
+        <!-- FAQ Accordion -->
+        <h3 style="text-align: center; margin-top: 4rem;">Frequently Asked Questions</h3>
+        
+        <div style="max-width: 900px; margin: 2rem auto;">
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>Is this scientifically proven?</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <p>Our technology is based on cutting-edge research showing animals communicate through complex languages. Studies have identified over 250 distinct dolphin whistles, region-specific whale songs, and elephant "names" for each other. We're building on this foundation with AI pattern recognition.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>Will it work on my pet?</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <p>Our initial prototypes focus on dogs and dolphins. Dogs are ideal candidates as their ancestors were selected for domestication based on communication ability with humans. Commercial versions will expand to cats and other common pets.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>Is it safe for my animal?</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <p>Absolutely. The device is non-invasive, lightweight, and designed to cause zero distress. It simply reads external brain wave signals without any penetration or discomfort.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>How accurate is the translation?</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <p>Our AI model improves with each use. The more data we collect across species, the more accurate the translations become. Early users contribute to building the most comprehensive animal communication database in history.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>Where do the proceeds go?</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <p>100% of our proceeds support animal shelters and ethical animal research initiatives. Your purchase directly contributes to better treatment and understanding of animals worldwide.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Research Section -->
+    <section id="research">
+        <h2>Research Foundation</h2>
+
+        <div class="glass-card">
+            <h3>The Communication Barrier Problem</h3>
+            <p>Throughout human history, we've made critical decisions about animals without truly understanding their experiences. Over 110 million animals are used in laboratory research annually worldwide, yet scientists cannot ask what causes manageable discomfort versus genuine suffering. Industrial agriculture processes over 80 billion land animals yearly using systems based solely on human assumptions.</p>
+            
+            <p>The consequences extend beyond individual species. When wolves were absent from Yellowstone for nearly 70 years, deer overpopulation led to overgrazing, erosion, and ecosystem collapse affecting fish and numerous other species. Years of environmental decline could have been prevented with direct animal communication.</p>
+        </div>
+
+        <div class="glass-card">
+            <h3>Scientific Evidence for Animal Languages</h3>
+            
+            <p><strong>Marine Mammals:</strong> Orcas and humpback whales use region-specific songs to identify individuals from their populations and attract mates. Dr. Laela Sayigh's team at Woods Hole Oceanographic Institution has logged over 250 distinct signature dolphin whistles, providing baseline data for our development.</p>
+            
+            <p><strong>Elephants:</strong> Studies reveal elephants use harmonically rich, low-frequency calls to address key group members, essentially having unique "names" for each other, just like humans.</p>
+            
+            <p><strong>Dogs Understanding Humans:</strong> Recent research shows dogs not only recognize sound patterns but realize certain words refer to specific objects. Their ancestors were selected for domestication based on communication ability, making them ideal for our initial prototype.</p>
+            
+            <p><strong>Disaster Detection:</strong> For millennia, people have reported alarmed animal behavior before natural disasters. Research from 2017 found farm animals began changing behavior up to 20 hours before earthquakes, offering potential early warning systems.</p>
+        </div>
+
+        <div class="glass-card">
+            <h3>Our Sources</h3>
+            <ul>
+                <li>Pilcher, H. (2025). "Scientists have almost cracked the secret language of animals." BBC Science Focus Magazine</li>
+                <li>Sayigh, L. (2026). Dr. Laela Sayigh – Cetacean communication. Woods Hole Oceanographic Institution</li>
+                <li>Kaplan, K. (2024). "Your dog can understand what you say better than you think." Los Angeles Times</li>
+                <li>Miller, N. (2022). "The animals that detect disasters." BBC Future</li>
+                <li>National Park Service. Wolf Management - Yellowstone National Park</li>
+                <li>Animal Welfare Institute. (2019). Inhumane Practices on Factory Farms</li>
+                <li>Earth Species Project. "Introducing NatureLM-audio: An Audio-Language Foundation Model for Bioacoustics"</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Ethics Section -->
+    <section id="ethics">
+        <h2>Ethical Implications & Privacy</h2>
+
+        <div class="glass-card">
+            <h3>Societal Impact</h3>
+            <p>Conversing Creatures has the potential to fundamentally transform how humanity relates to the animal kingdom. By providing scientific data on animal consciousness and communication, this technology can promote evidence-based policies for more humane treatment across industries.</p>
+            
+            <p>At a societal level, our invention encourages recognition of animals as conscious, sentient beings with rich internal lives deserving of dignity and respect. This shift could reshape:</p>
+            <ul>
+                <li>Agricultural practices and industrial farming standards</li>
+                <li>Laboratory research protocols and animal testing policies</li>
+                <li>Wildlife conservation and ecosystem management strategies</li>
+                <li>Legal frameworks regarding animal rights and welfare</li>
+                <li>Public perception and ethical consideration of non-human species</li>
+            </ul>
+        </div>
+
+        <div class="glass-card">
+            <h3>Ethical Considerations</h3>
+            
+            <p><strong>Monitoring Duration:</strong> We acknowledge concerns about neurologically monitoring animals over extended periods. Our device is designed for periodic use rather than constant surveillance, with clear guidelines for appropriate monitoring timeframes.</p>
+            
+            <p><strong>AI Interpretation Accuracy:</strong> There is a valid concern about misinterpretation or over-generalization of AI-derived conclusions. We commit to:</p>
+            <ul>
+                <li>Transparent disclosure of confidence levels in translations</li>
+                <li>Ongoing peer review and validation of our AI models</li>
+                <li>Clear communication about the limitations of current technology</li>
+                <li>Continuous improvement based on scientific feedback</li>
+            </ul>
+
+            <p><strong>Consent and Autonomy:</strong> While animals cannot provide informed consent in traditional terms, we prioritize their comfort and wellbeing. The device is designed to be completely non-invasive and can be easily removed if the animal shows any signs of distress.</p>
+        </div>
+
+        <div class="glass-card">
+            <h3>Privacy Policy</h3>
+            
+            <p><strong>Data Collection:</strong> Our device collects neural activity patterns, behavioral data, and environmental context. This information is anonymized and aggregated to improve our AI models.</p>
+            
+            <p><strong>User Privacy:</strong> Personal information is encrypted and never shared with third parties. You control what data is uploaded to our cloud database and can opt out of data sharing while still using the device locally.</p>
+            
+            <p><strong>Animal Privacy:</strong> We believe animals deserve privacy too. Users can set the device to "private mode" where no data is transmitted, though this limits translation accuracy.</p>
+            
+            <p><strong>Research Use:</strong> Aggregated, anonymized data may be used for scientific research to advance animal communication understanding. All research use follows strict ethical guidelines and institutional review.</p>
+            
+            <p><strong>Security:</strong> We employ bank-level encryption and security protocols to protect all data from unauthorized access or breaches.</p>
+        </div>
+
+        <div class="cta-section">
+            <h3>Our Commitment</h3>
+            <p>We pledge to always prioritize animal welfare above profit, to operate with complete transparency, and to use our technology exclusively for the benefit of animals and the advancement of ethical science.</p>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team">
+        <h2>Meet the Team</h2>
+        
+        <p style="text-align: center; margin-bottom: 3rem; font-size: 1.2rem; max-width: 800px; margin-left: auto; margin-right: auto;">A decade from now, we envision ourselves as leaders in interspecies communication technology, having revolutionized how humanity understands and interacts with the animal kingdom.</p>
+
+        <div class="team-grid">
+            <div class="team-card">
+                <div class="team-avatar">N</div>
+                <h4>Navya Bansal</h4>
+                <p class="role">Co-Founder & Chief Product Officer</p>
+                <p>Navya leads product development and user experience design. With a background in bioengineering and a passion for animal welfare, she ensures every device is comfortable, effective, and truly beneficial for animals. She pioneered the clip-on design that makes Conversing Creatures accessible for everyday use.</p>
+            </div>
+
+            <div class="team-card">
+                <div class="team-avatar">R</div>
+                <h4>Roshini Selvakumar</h4>
+                <p class="role">Co-Founder & Chief Scientific Officer</p>
+                <p>Roshini drives the scientific research foundation of Conversing Creatures. With expertise in neuroscience and animal behavior, she leads our research partnerships with institutions worldwide and ensures our technology remains grounded in rigorous science. She spearheads our veterinary and conservation applications.</p>
+            </div>
+
+            <div class="team-card">
+                <div class="team-avatar">E</div>
+                <h4>Evie Salam</h4>
+                <p class="role">Co-Founder & Chief AI Officer</p>
+                <p>Evie architects the AI models that power our translation technology. Drawing on expertise in machine learning and bioacoustics, she developed our proprietary neural pattern recognition system. She oversees the continuous improvement of our algorithms as we gather data from animals around the world.</p>
+            </div>
+        </div>
+
+        <div class="cta-section" style="margin-top: 3rem;">
+            <h3>Our Vision</h3>
+            <p>In ten years, we see a world where animal communication is understood, where research is conducted with full knowledge of animal experience, where ecosystems are managed with input from their inhabitants, and where the bond between humans and animals reaches depths never before possible.</p>
+            <p style="font-size: 1.3rem; font-weight: 600;">We're not just building a product—we're building a bridge between species.</p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2>Get In Touch</h2>
+
+        <div class="contact-grid">
+            <div class="contact-card">
+                <h3>📧 General Inquiries</h3>
+                <p><a href="mailto:info@conversingcreatures.com">info@conversingcreatures.com</a></p>
+                <p style="margin-top: 1rem; color: #4a5568;">For general questions about our product and mission</p>
+            </div>
+
+            <div class="contact-card">
+                <h3>🔬 Research</h3>
+                <p><a href="mailto:research@conversingcreatures.com">research@conversingcreatures.com</a></p>
+                <p style="margin-top: 1rem; color: #4a5568;">Collaborate on scientific studies and data analysis</p>
+            </div>
+
+            <div class="contact-card">
+                <h3>🤝 Partnerships</h3>
+                <p><a href="mailto:partners@conversingcreatures.com">partners@conversingcreatures.com</a></p>
+                <p style="margin-top: 1rem; color: #4a5568;">Explore partnership and collaboration opportunities</p>
+            </div>
+
+            <div class="contact-card">
+                <h3>📰 Press</h3>
+                <p><a href="mailto:press@conversingcreatures.com">press@conversingcreatures.com</a></p>
+                <p style="margin-top: 1rem; color: #4a5568;">Media inquiries and press releases</p>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <h3>Remember: 100% of Proceeds Support Animals</h3>
+            <p>Every purchase directly funds animal shelters and ethical research initiatives. Together, we can discover what your pet is really thinking while making the world better for all creatures.</p>
+            <div class="cta-buttons">
+                <a href="#product" class="btn btn-primary">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p style="font-size: 1.2rem; margin-bottom: 1rem;">&copy; 2026 Conversing Creatures. All rights reserved.</p>
+        <p>Bridging the communication gap between species, one brain wave at a time.</p>
+    </footer>
+
+    <script>
+        // Progress Bar
+        window.addEventListener('scroll', () => {
+            const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+        });
+
+        // Carousel
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+        const dots = document.querySelectorAll('.carousel-dot');
+
+        function goToSlide(n) {
+            currentSlide = n;
+            const carousel = document.getElementById('productCarousel');
+            carousel.style.transform = `translateX(-${currentSlide * 100}%)`;
+            
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentSlide);
+            });
+        }
+
+        // Auto-advance carousel
+        setInterval(() => {
+            currentSlide = (currentSlide + 1) % slides.length;
+            goToSlide(currentSlide);
+        }, 5000);
+
+        // Tabs
+        function openTab(evt, tabName) {
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => content.classList.remove('active'));
+            
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            tabBtns.forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabName).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+
+        // Accordion
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            const isActive = item.classList.contains('active');
+            
+            document.querySelectorAll('.accordion-item').forEach(i => {
+                i.classList.remove('active');
+            });
+            
+            if (!isActive) {
+                item.classList.add('active');
+            }
+        }
+    </script>
